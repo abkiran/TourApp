@@ -14,9 +14,9 @@ class CreateTourTable extends Migration {
 	{
 		Schema::create('tour', function(Blueprint $table)
 		{
-			$table->integer('id', true);
+			$table->bigIncrements('id');
 			$table->string('title', 100)->nullable()->index('index3');
-			$table->string('url', 50)->nullable()->unique('index2');
+			$table->string('url', 100)->nullable()->unique('index2');
 			$table->text('description', 65535)->nullable();
 			$table->integer('location_id')->nullable()->index('fk_tour_1_idx');
 			$table->time('duration')->nullable();

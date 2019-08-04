@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Api\TourController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,12 +14,20 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/tours', 'TourController@index');
-Route::get('/tours/{str}', 'TourController@getTour');
-Route::post('/tours', 'TourController@store');
-Route::put('/tours', 'TourController@update');
-Route::delete('/tours/{id}', 'TourController@deleteTour');
+$api = app('Dingo\Api\Routing\Router');
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
+$api->version('v1', function ($api) {
+    $api->get('test', function () {
+        return 'It is ok';
+    });
+
+    $api->get('/tours', 'App\Http\Controllers\Api\TourController@index');
+    $api->get('/tours/{str}', 'App\Http\Controllers\Api\TourController@getTour');
+    $api->post('/tours', 'App\Http\Controllers\Api\TourController@store');
+    $api->put('/tours', 'App\Http\Controllers\Api\TourController@update');
+    $api->delete('/tours/{id}', 'App\Http\Controllers\Api\TourController@destroyTour');
+});
+
+// $api->middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });

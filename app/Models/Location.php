@@ -36,8 +36,8 @@ class Location extends Model
      *
      * @return void
      */
-    public function locationCity()
+    public function city()
     {
-        return $this->hasOne('\App\Models\City', 'id', 'city_id')->with(['locationCity']);
+        return $this->belongsTo('\App\Models\City', 'city_id', 'id');
     }
 }

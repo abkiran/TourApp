@@ -1,6 +1,9 @@
 <?php
 namespace App\Models;
 
+use App\Models\Location;
+use App\Models\Seo;
+
 class Tour extends Model
 {
     /**
@@ -30,15 +33,22 @@ class Tour extends Model
      * @var array
      */
     protected $hidden = ['id'];
+    
+    /**
+     * The relationships that should always be loaded.
+     *
+     * @var array
+     */
+    protected $with = ['seo', 'location'];
 
     /**
      * Tours Location 
      *
      * @return void
      */
-    public function tourLocation()
+    public function location()
     {
-        return $this->hasOne('\App\Models\Location', 'id', 'location_id')->with(['locationCity']);
+        return $this->hasOne(Location::class, 'id', 'location_id')->with(['city']);
     }
 
     /**
@@ -46,8 +56,8 @@ class Tour extends Model
      *
      * @return void
      */
-    public function tourSeo()
+    public function seo()
     {
-        return $this->hasOne('\App\Models\Seo', 'id', 'seo_id');
+        return $this->hasOne(Seo::class, 'id', 'seo_id');
     }
 }

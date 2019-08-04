@@ -14,9 +14,9 @@ class CreateSeoTable extends Migration {
 	{
 		Schema::create('seo', function(Blueprint $table)
 		{
-			$table->integer('id')->primary();
+			$table->bigIncrements('id');
 			$table->string('title', 75)->nullable();
-			$table->string('description', 160)->nullable();
+			$table->string('description', 300)->nullable();
 			$table->string('keywords', 200)->nullable();
 		});
 	}

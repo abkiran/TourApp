@@ -14,9 +14,9 @@ class CreateCityTable extends Migration {
 	{
 		Schema::create('city', function(Blueprint $table)
 		{
-			$table->integer('id', true);
+			$table->bigIncrements('id');
 			$table->string('name', 45)->nullable();
-			$table->string('url', 45)->nullable();
+			$table->string('url', 200)->nullable();
 		});
 	}
 
