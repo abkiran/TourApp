@@ -22,7 +22,7 @@ class TourTest extends TestCase
             'seo_id' => factory(Seo::class)->create()->id,
             'booking_count' => $this->faker->randomDigitNotNull
         ];
-        $this->call('POST', '/api/tours', $data)
+        $this->call('POST', '/tours', $data)
             ->assertJson($data);
     }
     
