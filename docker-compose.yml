@@ -5,7 +5,7 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: ./.cloud/docker/Dockerfile
     image: digitalocean.com/php
     container_name: app
     restart: unless-stopped
@@ -14,6 +14,9 @@ services:
       SERVICE_NAME: app
       SERVICE_TAGS: dev
     working_dir: /var/www
+    volumes:
+      - ./:/var/www
+      - ./.cloud/php/local.ini:/usr/local/etc/php/conf.d/local.ini
     networks:
       - app-network
 
@@ -26,6 +29,9 @@ services:
     ports:
       - "80:80"
       - "443:443"
+    volumes:
+      - ./:/var/www
+      - ./.cloud/nginx/conf.d/:/etc/nginx/conf.d/
     networks:
       - app-network
 
@@ -38,10 +44,13 @@ services:
     ports:
       - "3306:3306"
     environment:
-      MYSQL_DATABASE: laravel
+      MYSQL_DATABASE: tour
       MYSQL_ROOT_PASSWORD: root
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
+    volumes:
+      - ./dbdata:/var/lib/mysql/
+      - ./.cloud/mysql/my.cnf:/etc/mysql/my.cnf
     networks:
       - app-network
 
