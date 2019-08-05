@@ -8,9 +8,20 @@ use Dingo\Api\Routing\Helpers;
 use App\Models\Tour;
 use App\Models\Seo;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class TourController extends Controller
 {
+    public function success($message)
+    {
+        $return = [
+            'success' => [
+                'status_code' => 200,
+                'message' => $message
+            ]
+        ];
+        return $return;
+    }
     public function index(Request $request)
     {
         $tours = Tour::with(['location', 'seo'])
@@ -28,7 +39,7 @@ class TourController extends Controller
     {
         $this->validate($request, [
             'title' => 'required|string|max:100',
-            'url' => 'required|string|max:50|unique:tour,url',
+            'url' => 'required|string|max:100|unique:tour',
             'description' => 'nullable|string',
             'location_id' => 'nullable|int||exists:location,id',
             'duration' => 'nullable|string|max:100',
@@ -41,15 +52,15 @@ class TourController extends Controller
         ]);
 
         $seo = new Seo();
-        $seo->title = $request->title;
-        $seo->description = $request->description;
-        $seo->keywords = $request->keywords;
+        $seo->title = $request->title??'';
+        $seo->description = $request->description??'';
+        $seo->keywords = $request->keywords??'';
         $seo_id = $seo->save();
 
         $request->request->add();
         Tour::create($request->all() + ['seo_id' => $seo_id]);
-
-        // return redirect('/admin/tour')->with('message', 'New tour has been created.');
+        
+        return $this->success("Created");
     }
 
     /**
@@ -78,7 +89,7 @@ class TourController extends Controller
         }
         $this->validate($request, [
             'title' => 'required|string|max:100',
-            'url' => 'required|string|max:50|unique:tour,url,'.$id,
+            'url' => 'required|string|max:100|unique:tour,url,'.$id,
             'description' => 'nullable|string',
             'location_id' => 'nullable|int||exists:location,id',
             'duration' => 'nullable|string|max:100',
@@ -97,9 +108,9 @@ class TourController extends Controller
         if (!$seo) {
             $seo = new Seo();
         }
-        $seo->title = $request->title;
-        $seo->description = $request->description;
-        $seo->keywords = $request->keywords;
+        $seo->title = $request->title??'';
+        $seo->description = $request->description??'';
+        $seo->keywords = $request->keywords??'';
         $seo = $seo->save();
         if (!$seo_id) {
             $seo_id = $seo->id;
@@ -115,6 +126,8 @@ class TourController extends Controller
         $tour->seo_id = $seo_id;
         $tour->booking_count = $request->get('booking_count');
         $tour->save();
+
+        return $this->success("Updated");
     }
 
     /**

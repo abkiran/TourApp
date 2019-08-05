@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Api\TourController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,13 +16,13 @@ use App\Http\Controllers\Api\TourController;
 $api = app('Dingo\Api\Routing\Router');
 
 $api->version('v1', function ($api) {
+    
 
     $api->get('/tours', 'App\Http\Controllers\Api\TourController@index')->name('tours.list');
     $api->get('/tours/{str}', 'App\Http\Controllers\Api\TourController@getTour')->name('tours.view');
     $api->post('/tours', 'App\Http\Controllers\Api\TourController@store')->name('tours.create');
     $api->put('/tours', 'App\Http\Controllers\Api\TourController@update')->name('tours.update');
     $api->delete('/tours/{id}', 'App\Http\Controllers\Api\TourController@destroyTour')->name('tours.delete');
-
 });
 
 // $api->middleware('auth:api')->get('/user', function (Request $request) {
