@@ -17,15 +17,13 @@ use App\Http\Controllers\Api\TourController;
 $api = app('Dingo\Api\Routing\Router');
 
 $api->version('v1', function ($api) {
-    $api->get('test', function () {
-        return 'It is ok';
-    });
 
-    $api->get('/tours', 'App\Http\Controllers\Api\TourController@index');
-    $api->get('/tours/{str}', 'App\Http\Controllers\Api\TourController@getTour');
-    $api->post('/tours', 'App\Http\Controllers\Api\TourController@store');
-    $api->put('/tours', 'App\Http\Controllers\Api\TourController@update');
-    $api->delete('/tours/{id}', 'App\Http\Controllers\Api\TourController@destroyTour');
+    $api->get('/tours', 'App\Http\Controllers\Api\TourController@index')->name('tours.list');
+    $api->get('/tours/{str}', 'App\Http\Controllers\Api\TourController@getTour')->name('tours.view');
+    $api->post('/tours', 'App\Http\Controllers\Api\TourController@store')->name('tours.create');
+    $api->put('/tours', 'App\Http\Controllers\Api\TourController@update')->name('tours.update');
+    $api->delete('/tours/{id}', 'App\Http\Controllers\Api\TourController@destroyTour')->name('tours.delete');
+
 });
 
 // $api->middleware('auth:api')->get('/user', function (Request $request) {

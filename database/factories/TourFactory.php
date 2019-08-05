@@ -12,7 +12,7 @@ $factory->define(Tour::class, function (Faker $faker) {
         'title' => $faker->title,
         'url' => $faker->slug,
         'description' => $faker->text($maxNbChars = 200),
-        'location_id' => Location::orderByRaw('RAND()')->first()->id,
+        'location_id' => Location::orderByRaw('RANDOM()')->first()->id,
         'duration' => '03:00',
         'is_live' => $faker->boolean,
         'is_promoted' => $faker->boolean,

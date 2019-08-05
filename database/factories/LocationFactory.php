@@ -12,6 +12,6 @@ $factory->define(Location::class, function (Faker $faker) {
         'url' => $faker->url,
         'latitude' => $faker->latitude($min = -90, $max = 90),
         'longitude' => $faker->longitude($min = -180, $max = 180),
-        'city_id' => City::orderByRaw('RAND()')->first()->id,
+        'city_id' => City::orderByRaw('RANDOM()')->first()->id,
     ];
 });
