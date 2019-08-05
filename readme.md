@@ -10,7 +10,7 @@ The Below API are created
 Follow the below steps to setup the project
 - Copy .env.example to .env
 `cp .env.example .env`
-- Update the db config in .env (Use sqlite for now to run it quickly, if your not using docker)
+- Update the db config in .env (Use sqlite for now to run it quickly, if you are not using docker)
 - Run migrations
 `php artisan migrate`
 - Run database seeds
